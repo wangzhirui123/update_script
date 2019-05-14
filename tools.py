@@ -2,8 +2,10 @@
 __author__ = 'Px'
 import requests
 import sys
+import os
 import base64
 import numbers
+import datetime
 import json
 import time
 import gevent
@@ -36,7 +38,47 @@ def deleteinfo(userid,ip):
             }
     print userid,ip
     result = requests.post('http://{}:8090/person/delete'.format(ip),data=photo_data).content
+class Applylog(object):
 
+    def transcoding(self,info):
+
+       return base64.b64decode(info)
+
+    def clone_code(self):
+        # try:
+        #     os.system('rmdir/s/q employment')
+        #     print 'done remove version ...'
+        #     time.sleep(2)
+        # except Exception as e:
+        #     print e
+        # if os.path.exists(os.path.join(os.path.dirname(__file__),'employment').replace('\\','/')):
+            # print os.path.join(os.path.dirname(__file__),'employment').replace('\\','/')
+            # os.chdir(os.path.join(os.path.dirname(__file__),'employment/').replace('\\','/'))
+            # print os.getcwd()
+            # os.system('git fetch origin')
+        # else:
+        os.mkdir(os.path.join(os.path.dirname(__file__),'employment/').replace('\\','/'))
+        os.chdir(os.path.join(os.path.dirname(__file__),'employment/').replace('\\','/'))
+        os.system(base64.b64decode('Z2l0IGNsb25lIGh0dHBzOi8vZ2l0bGFiLmNvbS9hbnQtdHJhZGVyL2VtcGxveW1lbnQuZ2l0'))
+
+        os.system('mvn install')
+        shutil.copyfile(os.path.join(os.getcwd(),'employment-project/target/employment-project.war').replace('\\','/'),os.path.join(TOMCAT_PATH,'webapps/employment-project/employment-project.war').replace('\\','/'))
+        os.chdir(os.path.join(TOMCAT_PATH,'webapps/employment-project/').replace('\\','/'))
+        os.system('jar xvf employment-project.war')
+        os.remove('employment-project.war')
+        os.chdir(os.path.join(TOMCAT_PATH,'bin').replace('\\','/'))
+        os.system('startup.bat')
+    @classmethod
+    def writelog(cls,somthing):
+        if not os.path.exists(os.path.join(os.path.dirname(__file__),'Log')):
+            os.mkdir(os.path.join(os.path.dirname(__file__),'Log'))
+        with open(os.path.join(os.path.dirname(__file__),'Log/{}'.format(str(datetime.date.today()))),'a+')as f:
+            f.write('A history of the application running {}\n'.format(str(datetime.datetime.now())))
+            f.write(somthing+'\n')
+    def readlog(self,logpath):
+        with open(logpath,'r+')as f:
+            for i in f.readlines():
+                print i.replace('\n','')
 class AllUser(object):
     def __init__(self,user_list):
         self.pwd = '123456'
@@ -79,9 +121,10 @@ class AllUser(object):
             if 'false' in photo_result:
                 self.deleteinfo(ip)
                 print u' {}  {}:照片添加失败-{} 人脸识别设备已删除该人员信息,请重新录入'.format(ip,photo_reg_info['msg'],self.user['realname'])
-                
+                Applylog.writelog(u' {}  {}:照片添加失败-{} 人脸识别设备已删除该人员信息,请重新录入'.format(ip,photo_reg_info['msg'],self.user['realname']))
             else:
                 print u' {}  {}:照片添加成功-{}'.format(ip,photo_reg_info['data'],self.user['realname'])
+                Applylog.writelog(u' {}  {}:照片添加成功-{}'.format(ip,photo_reg_info['data'],self.user['realname']))
                 update_user = requests.get('http://111.62.41.156:8010/user/updateUserenterByUserId?user_id=%s'%self.user['id'])
         except Exception as e:
             print e
@@ -93,14 +136,16 @@ class AllUser(object):
             'person':'{"id":"%s","idcardNum":"","name":"%s","IDNumber":"","jobNumber":"","facePermission":"1","idCardPermission":"2","faceAndCardPermission":"2","ID Permission":"2"}'%(self.user['id'],self.user['realname'])
         }
 
-        try:*+
+        try:
             person_result = requests.post('http://{}:8090/person/create'.format(ip),data=person_data).content
 
             if 'true' in person_result:
                 print u' {}  人员信息添加成功-{}'.format(ip,self.user['realname'])
+                Applylog.writelog(u' {}  人员信息添加成功-{}'.format(ip,self.user['realname']))
                 self.push_photo(ip)
             else:
                 print u' {}  人员信息添加失败-{},{} 人脸识别设备已删除该人员信息,请重新录入'.format(ip,self.user['realname'],json.loads(person_result)['msg'])
+                Applylog.writelog(u' {}  人员信息添加失败-{},{} 人脸识别设备已删除该人员信息,请重新录入'.format(ip,self.user['realname'],json.loads(person_result)['msg']))
                 self.deleteinfo(ip)
                 return None
         except Exception as e:
@@ -120,5 +165,7 @@ if __name__ == '__main__':
     # gevent.joinall(tasks)
     # with ThreadPoolExecutor(20) as T:
     #     T.map(push_info,all_user(PID))
-    deleteinfo(1196,'192.168.1.105')
-    deleteinfo(1196,'192.168.1.115')
+    # deleteinfo(1196,'192.168.1.105')
+    # deleteinfo(1196,'192.168.1.115')
+    #Applylog.writelog('aaa')
+    pass
