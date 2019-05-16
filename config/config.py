@@ -6,10 +6,15 @@ import os
 reload(sys)
 sys.setdefaultencoding('utf8')
 
-PID = 'MjA5'
-APPLICATIONLOG_PATH =None
+PID = 'MjA58'
+APPLICATIONLOG_PATH = None
 
 IP_LIST = [
     '192.168.1.105',
     '192.168.1.115'
     ]
+
+LOG_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)),'Log/').replace('\\','/')
+
+if __name__ == '__main__':
+    print LOG_PATH
