@@ -18,7 +18,7 @@ sys.setdefaultencoding('utf8')
 
 if __name__ == '__main__':
 
-    alluser = AllUser(json.loads(requests.get('http://111.62.41.156:8010/user/queryNoInUserByPId?project_id=%s'%base64.b64decode('MjA5')).content))
+    alluser = AllUser(json.loads(requests.get('http://111.62.41.156:8010/user/queryNoInUserByPId?project_id=%s'%base64.b64decode(PID)).content))
     for i in alluser:
         i.push_info()
         #i.delete_allinfo()

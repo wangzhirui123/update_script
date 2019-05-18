@@ -207,5 +207,5 @@ if __name__ == '__main__':
     # deleteinfo(1196,'192.168.1.105')
     # deleteinfo(1196,'192.168.1.115')
 
-    Applylog.writelog('a')
+    Applylog.writelog(u' {}  人员信息添加失败-{},{} 人脸识别设备已删除该人员信息,请重新录入'.format('192.168.1.1','李四','照片注册成功'))
 
