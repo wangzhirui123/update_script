@@ -140,7 +140,7 @@ class AllUser(object):
             else:
                 print u' {}  {}:照片添加成功-{}'.format(ip,photo_reg_info['data'],self.user['realname'])
                 Applylog.writelog(u' {}  {}:照片添加成功-{}'.format(ip,photo_reg_info['data'],self.user['realname']))
-                update_user = requests.get('http://111.62.41.156:8010/user/updateUserenterByUserId?user_id=%s'%self.user['id'])
+                update_user = requests.get('http://111.62.41.223/user/updateUserenterByUserId?user_id=%s'%self.user['id'])
         except Exception as e:
             print e
 
