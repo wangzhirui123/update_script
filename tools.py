@@ -167,9 +167,9 @@ class AllUser(object):
             print e
 
     def push_info(self):
-
+        IP_LISTs = [i for i in IP_LIST if i !=""]
         with ThreadPoolExecutor(2)as T:
-            T.map(self.push_personnel,IP_LIST)
+            T.map(self.push_personnel,IP_LISTs)
 
 class UploadFile(object):
     def __init__(self,file_list):
