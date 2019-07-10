@@ -12,7 +12,7 @@ APPLICATIONLOG_PATH = None
 IP_LIST = ['192.168.1.105','192.168.1.115']
 
 
-
+a = "2"
 
 LOG_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)),'Log/').replace('\\','/')
 
