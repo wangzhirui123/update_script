@@ -6,7 +6,7 @@ import os
 reload(sys)
 sys.setdefaultencoding('utf8')
 
-PID = 'MjQ0'
+PID = 'MjQ011111'
 APPLICATIONLOG_PATH = None
 
 IP_LIST = ['192.168.1.1051','192.168.1.1151']
