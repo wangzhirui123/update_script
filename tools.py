@@ -55,30 +55,7 @@ class Applylog(object):
 
        return base64.b64decode(info)
 
-    def clone_code(self):
-        # try:
-        #     os.system('rmdir/s/q employment')
-        #     print 'done remove version ...'
-        #     time.sleep(2)
-        # except Exception as e:
-        #     print e
-        # if os.path.exists(os.path.join(os.path.dirname(__file__),'employment').replace('\\','/')):
-            # print os.path.join(os.path.dirname(__file__),'employment').replace('\\','/')
-            # os.chdir(os.path.join(os.path.dirname(__file__),'employment/').replace('\\','/'))
-            # print os.getcwd()
-            # os.system('git fetch origin')
-        # else:
-        os.mkdir(os.path.join(os.path.dirname(__file__),'employment/').replace('\\','/'))
-        os.chdir(os.path.join(os.path.dirname(__file__),'employment/').replace('\\','/'))
-        os.system(base64.b64decode('Z2l0IGNsb25lIGh0dHBzOi8vZ2l0bGFiLmNvbS9hbnQtdHJhZGVyL2VtcGxveW1lbnQuZ2l0'))
 
-        os.system('mvn install')
-        shutil.copyfile(os.path.join(os.getcwd(),'employment-project/target/employment-project.war').replace('\\','/'),os.path.join(TOMCAT_PATH,'webapps/employment-project/employment-project.war').replace('\\','/'))
-        os.chdir(os.path.join(TOMCAT_PATH,'webapps/employment-project/').replace('\\','/'))
-        os.system('jar xvf employment-project.war')
-        os.remove('employment-project.war')
-        os.chdir(os.path.join(TOMCAT_PATH,'bin').replace('\\','/'))
-        os.system('startup.bat')
 
     @classmethod
     def writelog(cls,somthing):
