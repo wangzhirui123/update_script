@@ -15,6 +15,6 @@ IP_LIST = ['192.168.1.105','192.168.1.115']
 
 
 LOG_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)),'Log/').replace('\\','/')
-
+a = "1"
 if __name__ == '__main__':
     print LOG_PATH
