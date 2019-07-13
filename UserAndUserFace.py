@@ -7,9 +7,6 @@ import re
 import time
 import json
 import requests
-import MySQLdb
-from lxml import etree
-from bs4 import BeautifulSoup
 from concurrent.futures import ThreadPoolExecutor
 
 from config.config import PID
