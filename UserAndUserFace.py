@@ -38,7 +38,7 @@ def transmission(item):
 
         person_data = {
             'pass':"123456",
-            'person':'{"id":"%s","idcardNum":"","name":"%s","IDNumber":"","jobNumber":"","facePermission":"1","idCardPermission":"2","faceAndCardPermission":"2","ID Permission":"2"}'%(item['id'],item['realname'])
+            'person':'{"id":"%s","idcardNum":"","name":"%s","IDNumber":"","jobNumber":"","facePermission":"2","idCardPermission":"2","faceAndCardPermission":"2","ID Permission":"2"}'%(item['id'],item['realname'])
         }
         try:
             person_result = requests.post('http://{}:8090/person/create'.format(IP),data=person_data).content

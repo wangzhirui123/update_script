@@ -125,7 +125,7 @@ class AllUser(object):
 
         person_data = {
             'pass':self.pwd,
-            'person':'{"id":"%s","idcardNum":"","name":"%s","IDNumber":"","jobNumber":"","facePermission":"1","idCardPermission":"2","faceAndCardPermission":"2","ID Permission":"2"}'%(self.user['id'],self.user['realname'])
+            'person':'{"id":"%s","idcardNum":"","name":"%s","IDNumber":"","jobNumber":"","facePermission":"2","idCardPermission":"2","faceAndCardPermission":"2","ID Permission":"2"}'%(self.user['id'],self.user['realname'])
         }
 
         try:
