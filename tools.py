@@ -7,6 +7,7 @@ import base64
 from concurrent.futures import ThreadPoolExecutor
 import socket
 import numbers
+import subprocess
 import datetime
 import json
 import time
@@ -14,9 +15,11 @@ import gevent
 import gevent.monkey
 from config.config import PID,IP_LIST,LOG_PATH
 from concurrent.futures import ThreadPoolExecutor
+from requests.exceptions import ConnectionError
 gevent.monkey.patch_socket()
 reload(sys)
 sys.setdefaultencoding('utf8')
+
 
 def color_print(msg,color='red', exits=False):
 
@@ -75,7 +78,7 @@ class AllUser(object):
     def __init__(self,user_list):
         self.pwd = '123456'
         self.user = user_list
-
+        self.status = True
     def __get__(self, instance, owner):
 
         return self.user
@@ -117,7 +120,8 @@ class AllUser(object):
             else:
                 print u' {}  {}:照片添加成功-{}'.format(ip,photo_reg_info['data'],self.user['realname'])
                 Applylog.writelog(u' {}  {}:照片添加成功-{}'.format(ip,photo_reg_info['data'],self.user['realname']))
-                update_user = requests.get('http://111.62.41.223/user/updateUserenterByUserId?user_id=%s'%self.user['id'])
+        except ConnectionError:
+            print '{},网络连接错误'.format(ip)
         except Exception as e:
             print e
 
@@ -140,6 +144,9 @@ class AllUser(object):
                 Applylog.writelog(u' {}  人员信息添加失败-{},{} 人脸识别设备已删除该人员信息,请重新录入'.format(ip,self.user['realname'],json.loads(person_result)['msg']))
                 self.deleteinfo(ip)
                 return None
+            update_user = requests.get('http://111.62.41.223/user/updateUserenterByUserId?user_id=%s'%self.user['id'])
+        except ConnectionError:
+            print '{},网络连接错误'.format(ip)
         except Exception as e:
             print e
 
@@ -173,16 +180,9 @@ class UploadFile(object):
 
 if __name__ == '__main__':
     print LOG_PATH
-    # for i in UploadFile(UploadFile.file_list(LOG_PATH)):
-    #
-    #     i.upload()
-
-    # tasks = [gevent.spawn(push_info(i)) for i in all_user(PID)]
-    # gevent.joinall(tasks)
-    # with ThreadPoolExecutor(20) as T:
-    #     T.map(push_info,all_user(PID))
-    # deleteinfo(1196,'192.168.1.105')
-    # deleteinfo(1196,'192.168.1.115')
-
     Applylog.writelog(u' {}  人员信息添加失败-{},{} 人脸识别设备已删除该人员信息,请重新录入'.format('192.168.1.1','李四','照片注册成功'))
-
+    # update_user = requests.get('http://111.62.41.223/user/updateUserenterByUserId?user_id=%s'%1)
+    person_data = {
+            'pass':'123456',
+            'person':'{"id":"%s","idcardNum":"","name":"%s","IDNumber":"","jobNumber":"","facePermission":"2","idCardPermission":"2","faceAndCardPermission":"2","ID Permission":"2"}'%(1,'张三')
+        }
