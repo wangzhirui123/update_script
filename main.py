@@ -18,7 +18,8 @@ sys.setdefaultencoding('utf8')
 STATUS = 1
 
 if __name__ == '__main__':
-    for ip in IP_LIST:
+    IP_LISTs = [i for i in IP_LIST if i !=""]
+    for ip in IP_LISTs:
         try:
             code = requests.get('http://{}:8090'.format(ip))
         except ConnectionError:
